@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function ProductCard({ product }) {
   return (
     <div className="product-card">
@@ -8,14 +10,13 @@ function ProductCard({ product }) {
         />
       )}
 
-      <h2>{product.product_name || "Unknown Product"}</h2>
+      <h2>{product.product_name}</h2>
 
       <p>Brand: {product.brands || "Unknown Brand"}</p>
 
-      <p>
-        Ingredients:{" "}
-        {product.ingredients_text || "Ingredients not available"}
-      </p>
+      <Link to={`/product/${product.code}`}>
+        View Details
+      </Link>
     </div>
   );
 }
