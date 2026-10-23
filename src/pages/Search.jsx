@@ -1,9 +1,9 @@
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import ProductList from "../components/ProductList";
 
-function Search() {
+function Search({ onSearch }) {
   const location = useLocation();
 
   const [searchTerm, setSearchTerm] = useState(
@@ -18,7 +18,9 @@ function Search() {
   const [error, setError] = useState("");
 
   const [searched, setSearched] = useState(
-    location.state?.products?.length > 0 || false
+    location.state?.searched ||
+    (location.state?.products?.length > 0) ||
+    false
   );
 
   const [selectedBrand, setSelectedBrand] = useState(
@@ -28,17 +30,24 @@ function Search() {
   function handleSubmit(e) {
     e.preventDefault();
 
+    onSearch(true);
     setLoading(true);
     setError("");
     setSearched(false);
     setSelectedBrand("All");
+    setProducts([]);
 
     fetch(
-      `https://world.openbeautyfacts.org/cgi/search.pl?search_terms=${searchTerm}&search_simple=1&action=process&json=1`
+      `https://world.openbeautyfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(searchTerm)}&search_simple=1&action=process&json=1`
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Search failed");
+        }
+        return response.json();
+      })
       .then((data) => {
-        const filteredProducts = data.products.filter((product) => {
+        const filteredProducts = (data.products || []).filter((product) => {
           return product.product_name && product.ingredients_text;
         });
 
@@ -68,8 +77,6 @@ function Search() {
 
   return (
     <div>
-      <h1>Search Products</h1>
-
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
