@@ -1,5 +1,6 @@
 import { useState } from "react";
-import ProductCard from "../components/ProductCard";
+import SearchBar from "../components/SearchBar";
+import ProductList from "../components/ProductList";
 
 function Search() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,16 +39,11 @@ function Search() {
     <div>
       <h1>Search Products</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search skincare products"
-        />
-
-        <button type="submit">Search</button>
-      </form>
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        handleSubmit={handleSubmit}
+      />
 
       {loading && <p className="message">Loading...</p>}
 
@@ -57,14 +53,7 @@ function Search() {
         <p className="message">No products found.</p>
       )}
 
-      <div className="product-list">
-        {products.map((product) => (
-          <ProductCard
-            key={product.code}
-            product={product}
-          />
-        ))}
-      </div>
+      <ProductList products={products} />
     </div>
   );
 }
