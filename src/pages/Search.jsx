@@ -1,14 +1,29 @@
+import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import ProductList from "../components/ProductList";
 
 function Search() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [products, setProducts] = useState([]);
+  const location = useLocation();
+
+  const [searchTerm, setSearchTerm] = useState(
+    location.state?.searchTerm || ""
+  );
+
+  const [products, setProducts] = useState(
+    location.state?.products || []
+  );
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [searched, setSearched] = useState(false);
-  const [selectedBrand, setSelectedBrand] = useState("All");
+
+  const [searched, setSearched] = useState(
+    location.state?.products?.length > 0 || false
+  );
+
+  const [selectedBrand, setSelectedBrand] = useState(
+    location.state?.selectedBrand || "All"
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -89,7 +104,12 @@ function Search() {
         </div>
       )}
 
-      <ProductList products={displayedProducts} />
+      <ProductList
+        products={displayedProducts}
+        searchTerm={searchTerm}
+        allProducts={products}
+        selectedBrand={selectedBrand}
+      />
     </div>
   );
 }
