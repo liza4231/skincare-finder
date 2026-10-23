@@ -8,6 +8,7 @@ function Search() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searched, setSearched] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState("All");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -15,6 +16,7 @@ function Search() {
     setLoading(true);
     setError("");
     setSearched(false);
+    setSelectedBrand("All");
 
     fetch(
       `https://world.openbeautyfacts.org/cgi/search.pl?search_terms=${searchTerm}&search_simple=1&action=process&json=1`
@@ -35,6 +37,20 @@ function Search() {
       });
   }
 
+  const brands = [
+    "All",
+    ...new Set(
+      products
+        .map((product) => product.brands)
+        .filter((brand) => brand)
+    ),
+  ];
+
+  const displayedProducts =
+    selectedBrand === "All"
+      ? products
+      : products.filter((product) => product.brands === selectedBrand);
+
   return (
     <div>
       <h1>Search Products</h1>
@@ -53,7 +69,27 @@ function Search() {
         <p className="message">No products found.</p>
       )}
 
-      <ProductList products={products} />
+      {searched && !loading && products.length > 0 && (
+        <div className="search-options">
+          <p>{displayedProducts.length} products found</p>
+
+          <label htmlFor="brand">Filter by Brand: </label>
+
+          <select
+            id="brand"
+            value={selectedBrand}
+            onChange={(e) => setSelectedBrand(e.target.value)}
+          >
+            {brands.map((brand) => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      <ProductList products={displayedProducts} />
     </div>
   );
 }
