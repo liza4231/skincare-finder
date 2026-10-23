@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-function ProductCard({ product }) {
+function ProductCard({
+  product,
+  searchTerm,
+  allProducts,
+  selectedBrand,
+}) {
   return (
     <div className="product-card">
       {product.image_front_url && (
@@ -14,7 +19,14 @@ function ProductCard({ product }) {
 
       <p>Brand: {product.brands || "Unknown Brand"}</p>
 
-      <Link to={`/product/${product.code}`}>
+      <Link
+        to={`/product/${product.code}`}
+        state={{
+          searchTerm: searchTerm,
+          products: allProducts,
+          selectedBrand: selectedBrand,
+        }}
+      >
         View Details
       </Link>
     </div>

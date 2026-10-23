@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 function ProductDetails() {
   const { code } = useParams();
+  const location = useLocation();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -36,7 +37,16 @@ function ProductDetails() {
 
   return (
     <div className="product-details">
-      <Link to="/search">← Back to Search</Link>
+      <Link
+        to="/search"
+        state={{
+          searchTerm: location.state?.searchTerm || "",
+          products: location.state?.products || [],
+          selectedBrand: location.state?.selectedBrand || "All",
+        }}
+      >
+        ← Back to Search Results
+      </Link>
 
       <h1>{product.product_name}</h1>
 
