@@ -13,66 +13,43 @@ body {
 nav {
   background-color: #ffffff;
   padding: 20px 40px;
-  display: flex;
-  gap: 30px;
   border-bottom: 1px solid #ddd;
 }
 
 nav a {
   text-decoration: none;
-  color: #333;
+  color: rgb(79, 96, 246);
+  font-size: 22px;
   font-weight: bold;
 }
 
-nav a:hover {
-  color: rgb(79, 96, 246);
-}
-
-nav a.active {
-  color: rgb(79, 96, 246);
-}
-
-.home {
-  max-width: 800px;
-  margin: 100px auto;
+.home-intro {
+  max-width: 750px;
+  margin: 50px auto 20px;
   text-align: center;
-  padding: 40px;
+  padding: 0 20px;
 }
 
-.home h1 {
+.home-intro h1 {
   font-size: 48px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-.home p {
+.home-intro p {
   font-size: 18px;
   line-height: 1.6;
-}
-
-.home a {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 24px;
-  background-color: rgb(79, 96, 246);
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.home a:hover {
-  background-color: rgb(59, 72, 210);
+  margin: 8px 0;
 }
 
 h1 {
   text-align: center;
-  margin-top: 40px;
 }
 
 form {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 30px auto;
+  margin: 25px auto 30px;
   padding: 0 20px;
 }
 
@@ -243,12 +220,11 @@ button:hover {
     padding: 15px 20px;
   }
 
-  .home {
-    margin: 40px auto;
-    padding: 20px;
+  .home-intro {
+    margin-top: 30px;
   }
 
-  .home h1 {
+  .home-intro h1 {
     font-size: 36px;
   }
 

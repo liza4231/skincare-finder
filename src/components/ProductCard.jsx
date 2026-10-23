@@ -25,6 +25,7 @@ function ProductCard({
           searchTerm: searchTerm,
           products: allProducts,
           selectedBrand: selectedBrand,
+          searched: true,
         }}
       >
         View Details

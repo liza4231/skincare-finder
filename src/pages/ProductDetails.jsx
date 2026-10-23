@@ -38,11 +38,12 @@ function ProductDetails() {
   return (
     <div className="product-details">
       <Link
-        to="/search"
+        to="/"
         state={{
           searchTerm: location.state?.searchTerm || "",
           products: location.state?.products || [],
           selectedBrand: location.state?.selectedBrand || "All",
+          searched: true,
         }}
       >
         ← Back to Search Results
